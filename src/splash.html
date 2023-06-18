@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Splashscreen</title>
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;0,900;1,500&display=swap");
+
+            body {
+                margin: 0;
+                background-color: #343541;
+                color: #fff;
+                font-family: "Noto Sans", sans-serif;
+                user-select: none;
+            }
+
+            .wrapper {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 100vw;
+                height: 100vh;
+            }
+
+            #drag {
+                position: absolute;
+                width: 100vw;
+                height: 100vh;
+                z-index: 1000;
+            }
+
+            #failed {
+                margin-bottom: 10px;
+            }
+
+            #loader {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 100px;
+            }
+
+            h1 {
+                font-weight: 800;
+            }
+
+            p {
+                margin: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div data-tauri-drag-region id="drag"></div>
+            <h1>QuickGPT</h1>
+            <div id="loader">
+                <p id="failed" style="display: none;">Connection failed</p>
+                <p data-tauri-drag-region id="countdown" style="display: none;">5</p>
+                <svg id="loading" style="display: block;" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Z" opacity=".5" />
+                    <path fill="currentColor" d="M20 12h2A10 10 0 0 0 12 2V4A8 8 0 0 1 20 12Z"><animateTransform attributeName="transform" dur="1s" from="0 12 12" repeatCount="indefinite" to="360 12 12" type="rotate" /></path>
+                </svg>
+            </div>
+        </div>
+
+        <script>
+            const tauri = window.__TAURI__;
+            let closeInterval = 5;
+
+            tauri.event.listen("failed", (e) => {
+                document.getElementById("failed").style.display = "block";
+                document.getElementById("countdown").style.display = "block";
+                document.getElementById("loading").style.display = "none";
+
+                document.getElementById("countdown").textContent = closeInterval;
+                setInterval(() => {
+                    closeInterval -= 1;
+                    document.getElementById("countdown").textContent = closeInterval;
+                }, 1000);
+            });
+        </script>
+    </body>
+</html>
