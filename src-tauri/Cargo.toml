@@ -1,7 +1,7 @@
 [package]
 name = "quickgpt"
 version = "0.0.0"
-description = "A Tauri App"
+description = "QuickGPT"
 authors = ["you"]
 license = ""
 repository = ""

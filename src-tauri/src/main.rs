@@ -20,7 +20,7 @@ use crate::configuration::{BANK_URL, KEYBIND};
 const URL: &str = "http://localhost:3000";
 
 #[cfg(not(dev))]
-const URL: &str = "";
+const URL: &str = "https://quickgpt-ui.vercel.app";
 
 static mut CONNECTED: bool = false;
 static mut SIGNED_IN: bool = false;
